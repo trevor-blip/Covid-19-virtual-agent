@@ -34,10 +34,10 @@ protobuf==3.12.4
 psutil==5.7.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
+pycparser 
 PyJWT==1.7.1
 pymongo==3.9.0
-pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1594392929924/work
+pyOpenSSL
 pyparsing==2.4.7
 PySocks==1.7.1
 python-dateutil==2.8.1
