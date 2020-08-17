@@ -21,12 +21,25 @@ class Api:
         return result.get('cases') , result.get('deaths'),result.get('tests')
 
 
+    def makeApiRequestForIndianStates(self):
+        url = "https://covid19-data.p.rapidapi.com/india"
+        headers = {
+            'x-rapidapi-host': "covid19-data.p.rapidapi.com",
+            'x-rapidapi-key': "1051a04ab3msh58010353202dd07p19b60fjsnd3ca01e107c0"
+        }
+        response = requests.request("GET", url, headers=headers)
+        # print(response.text)
+        js = json.loads(response.text)
+        print("******", js)
+        #result = js.get('list')
+        return js
+
 
     def makeApiWorldwide(self):
         url = "https://covid-19-statistics.p.rapidapi.com/reports/total"
         headers = {
             "x-rapidapi-host": "covid-19-statistics.p.rapidapi.com",
-            'x-rapidapi-key': "1051a04ab3msh58010353202dd07p19b60fjsnd3ca01e107c0"
+            "x-rapidapi-key": "1051a04ab3msh58010353202dd07p19b60fjsnd3ca01e107c0"
         }
         response = requests.request("GET", url, headers=headers)
         # print(response.text)

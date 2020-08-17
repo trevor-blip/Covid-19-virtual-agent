@@ -13,7 +13,6 @@ from pymongo import MongoClient
 app = Flask(__name__)  # initialising the flask app with the name 'app'
 hotline_no = '*08002000 / +263714734593*'
 
-
 # geting and sending response to dialogflow
 @app.route('/webhook', methods=['POST'])
 @cross_origin()
@@ -43,7 +42,7 @@ def processRequest(req):
 
     if intent == 'covid_searchcountry':
         cust_country = parameters.get("geo-country")
-        if (cust_country == "United States"):
+        if(cust_country=="United States"):
             cust_country = "USA"
 
         fulfillmentText, deaths_data, testsdone_data = makeAPIRequest(cust_country)
@@ -57,7 +56,7 @@ def processRequest(req):
                           "\n" + " Total Test Done : " + str(deaths_data.get('total')) + "\n\n*******END********* \n "
         print(webhookresponse)
         log.saveConversations(sessionID, cust_country, webhookresponse, intent, db)
-        log.saveCases("country", fulfillmentText, db)
+        log.saveCases( "country", fulfillmentText, db)
 
         return {
 
@@ -73,10 +72,8 @@ def processRequest(req):
                 {
                     "text": {
                         "text": [
-                            "Do you want me to send the detailed report to your e-mail address? Type.. \n 1. Sure \n "
-                            "2. Not now "
-                            # "We have sent the detailed report of {} Covid-19 to your given mail address.Do you have
-                            # any other Query?".format(cust_country)
+                            "Do you want me to send the detailed report to your e-mail address? Type.. \n 1. Sure \n 2. Not now "
+                            # "We have sent the detailed report of {} Covid-19 to your given mail address.Do you have any other Query?".format(cust_country)
                         ]
 
                     }
@@ -90,8 +87,9 @@ def processRequest(req):
         fulfillmentText = result.get("fulfillmentText")
         log.saveConversations(sessionID, "Sure send email", fulfillmentText, intent, db)
         val = log.getcasesForEmail("country", "", db)
-        print("===>", val)
-        prepareEmail([cust_name, cust_contact, cust_email, val])
+        print("===>",val)
+        prepareEmail([cust_name, cust_contact, cust_email,val])
+
     elif intent == "getResults":
         if intent == "getAnyContactRisk" and intent == "getContractingRisk" and intent == "getSymptoms":
             fulfillmentText = result.get("fulfillmentText")
@@ -159,7 +157,6 @@ def processRequest(req):
                 log.saveConversations(sessionID, query_text, fulfillmentText, intent, db)
                 return "i cannot exactly give you advice based on your answers please visit your nearest hospital for " \
                        "screening "
-
     elif intent == "totalnumber_cases":
         fulfillmentText = makeAPIRequest("world")
 
@@ -174,7 +171,7 @@ def processRequest(req):
             fulfillmentText.get('last_update')) + "\n\n*******END********* \n "
         print(webhookresponse)
         log.saveConversations(sessionID, "Cases worldwide", webhookresponse, intent, db)
-        # log.saveCases("world", fulfillmentText, db)
+        #log.saveCases("world", fulfillmentText, db)
 
         return {
 
@@ -207,7 +204,7 @@ def processRequest(req):
         webhookresponse1 = ''
         webhookresponse2 = ''
         webhookresponse3 = ''
-        for i in range(0, 11):
+        for i in range(0,11):
             webhookresponse = fulfillmentText[i]
             # print(webhookresponse['state'])
             # js = json.loads(webhookresponse.text)
@@ -246,6 +243,8 @@ def processRequest(req):
         print("***World wide Report*** \n\n" + webhookresponse1 + "\n\n*******END********* \n")
         print("***World wide Report*** \n\n" + webhookresponse2 + "\n\n*******END********* \n")
         print("***World wide Report*** \n\n" + webhookresponse3 + "\n\n*******END********* \n")
+
+
 
         log.saveConversations(sessionID, "Indian State Cases", webhookresponse1, intent, db)
         return {
@@ -295,8 +294,7 @@ def processRequest(req):
 
 
 def configureDataBase():
-    client = MongoClient(
-        "mongodb+srv://covid:hyperlink@whatsapp.juoa6.mongodb.net/covid19DB?retryWrites=true&w=majority")
+    client = MongoClient("mongodb+srv://covid:hyperlink@cluster0.dybcy.mongodb.net/covid19DB?retryWrites=true&w=majority")
     return client.get_database('covid19DB')
 
 
@@ -305,6 +303,9 @@ def makeAPIRequest(query):
 
     if query == "world":
         return api.makeApiWorldwide()
+    if query == "state":
+        return api.makeApiRequestForIndianStates()
+
     else:
         return api.makeApiRequestForCounrty(query)
 
@@ -314,9 +315,9 @@ def prepareEmail(contact_list):
     mailclient.sendEmail(contact_list)
 
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     port = int(os.getenv('PORT'))
     print("Starting app on port %d" % port)
-    app.run(debug=False, port=port, host='0.0.0.0')
-'''if __name__ == "__main__":
-    app.run(port=5000, debug=True)''' # running the app on the local machine on port 8000
+    app.run(debug=False, port=port, host='0.0.0.0')'''
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)# running the app on the local machine on port 8000
