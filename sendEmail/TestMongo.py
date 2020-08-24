@@ -1,6 +1,6 @@
 from pymongo import MongoClient
-client = MongoClient("mongodb+srv://username:password@cluster0-XYZURL.mongodb.net/test?retryWrites=true&w=majority")
-db = client.get_database('covid19DB')
+client = MongoClient(port=27017)
+db = client.get_database('chatbot')
 records = db.chat_records
 print(records.count_documents({}))
 new_chat = {
@@ -9,7 +9,5 @@ new_chat = {
     'branch': 'it'
 }
 
-
-records.remove()
 
 
