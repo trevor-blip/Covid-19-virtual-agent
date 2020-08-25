@@ -20,7 +20,6 @@ class Api:
         print("*" * 20)
         return result.get('cases') , result.get('deaths'),result.get('tests')
 
-
     def makeApiRequestForIndianStates(self):
         url = "https://covid19-data.p.rapidapi.com/india"
         headers = {
@@ -48,4 +47,3 @@ class Api:
         result = js.get('data')
 
         return result
-

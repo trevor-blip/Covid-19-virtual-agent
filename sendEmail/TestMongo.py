@@ -1,13 +1,13 @@
-from pymongo import MongoClient
-client = MongoClient(port=27017)
-db = client.get_database('chatbot')
-records = db.chat_records
-print(records.count_documents({}))
-new_chat = {
-    'name': 'ram',
-    'roll_no': 321,
-    'branch': 'it'
+import requests
+from firebase import  firebase
+
+
+firebase = firebase.FirebaseApplication("https://covid19chatbot-840f8.firebaseio.com/", None)
+data = {
+    'Name': 'Blessing Mwale',
+    'Email': 'blessingmwalein@outlook.com',
+    'Phone': '0772440088'
 }
+result = firebase.post('covid19chatbot-840f8/Customer', data)
 
-
-
+print(result)
