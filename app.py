@@ -98,58 +98,62 @@ def processRequest(req):
         moderateThreat = ['loss of appetite', 'loss of taste', 'cough', 'sneezing']
         noThreat = ['neither of the above']
         if p1.lower() == 'yes' and p2.lower() == 'yes' and p3 >= 37 and (p4.lower() in extremeThreat):
+            fulfillmentMessages = "You have extremely greater chances of having the virus. Please contact the authorities " \
+                                "for further screening and please exercise self isolation. *Hotline numbers* " + hotline_no
+
+            log.saveConversations(sessionID, query_text,fulfillmentMessages, intent, db )
             return {
                 "fulfillmentMessages": [
                     {
                         "text": {
                             "text": [
-                                "You have extremely greater chances of having the virus. Please contact the authorities " \
-                                "for further screening and please exercise self isolation. *Hotline numbers* " + hotline_no
+                                fullfillmentMessages
                             ]
-
                         }
                     }
                 ]
             }
         elif p1.lower() == 'maybe' and p2.lower() == 'maybe' and 36 < p3 < 37 and (p4.lower() in moderateThreat):
+            fulfillmentMessages2= "It is advisable to contact a health specialist for further diagonistics but you are " \
+                                "not showing severe signs of the virus. *Hotline numbers* " + hotline_no
+            log.saveConversations(sessionID, query_text,fulfillmentMessages2, intent, db )
             return {
                 "fulfillmentMessages": [
                     {
                         "text": {
                             "text": [
-                                "It is advisable to contact a health specialist for further diagonistics but you are " \
-                                "not showing severe signs of the virus. *Hotline numbers* " + hotline_no
-
+                               fulfillmentMessages2
                             ]
-
                         }
                     }
                 ]
             }
 
         elif p1.lower() == 'no' and p2.lower() == 'no' and 36 < p3 < 37 and (p4.lower() in noThreat):
+            fulfillmentMessages3 = "You are clear just type *precaution* for precautionary measures. "
+            log.saveConversations(sessionID, query_text,fulfillmentMessages3, intent, db )
             return {
                 "fulfillmentMessages": [
                     {
                         "text": {
                             "text": [
-                                "You are clear just type *precaution* for precautionary measures. "
-
+                                fulfillmentMessages3
                             ]
-
                         }
                     }
                 ]
 
             }
         elif p1.lower() == 'yes' and p2.lower() == 'yes' and 36 < p3 < 37 and (p4.lower() in moderateThreat or p4.lower() in noThreat):
+            fulfillmentMessages4= "It is advisable to contact a health specialist for further diagonistics but you are not " \
+                                "showing severe signs of the virus. *Hotline numbers* " + hotline_no
+            log.saveConversations(sessionID, query_text,fulfillmentMessages4, intent, db )
             return {
                 "fulfillmentMessages": [
                     {
                         "text": {
                             "text": [
-                                "It is advisable to contact a health specialist for further diagonistics but you are not " \
-                                "showing severe signs of the virus. *Hotline numbers* " + hotline_no
+                               fulfillmentMessages4
                             ]
 
                         }
@@ -157,13 +161,15 @@ def processRequest(req):
                 ]
             }
         elif p1.lower() == 'no' and p2.lower() == 'no' and 36 < p3 < 37 and (p4.lower() in extremeThreat):
+            fulfillmentMessages5="It is advisable to contact a health specialist for further diagonistics but you are not " \
+                                "showing severe signs of the virus. *Hotline numbers* " + hotline_no
+            log.saveConversations(sessionID, query_text,fulfillmentMessages5, intent, db )
             return {
                 "fulfillmentMessages": [
                     {
                         "text": {
                             "text": [
-                                "It is advisable to contact a health specialist for further diagonistics but you are not " \
-                                "showing severe signs of the virus. *Hotline numbers* " + hotline_no
+                                fulfillmentMessages5
                             ]
 
                         }
@@ -171,42 +177,46 @@ def processRequest(req):
                 ]
             }
         elif p1.lower() == 'yes' and 36 < p3 < 37 and (p4.lower() in allSymptoms):
+            fulfillmentMessages6 = "You have extremely greater chances of having the virus. Please contact the authorities " \
+                                "for further screening and please exercise self isolation. *Hotline numbers* " + hotline_no
+            log.saveConversations(sessionID, query_text,fulfillmentMessages6, intent, db )
             return {
                 "fulfillmentMessages": [
                     {
                         "text": {
                             "text": [
-                                "You have extremely greater chances of having the virus. Please contact the authorities " \
-                                "for further screening and please exercise self isolation. *Hotline numbers* " + hotline_no
+                               fulfillmentMessages6
                             ]
-
                         }
                     }
                 ]
             }
         elif p2.lower() == 'yes' and 36 < p3 < 37 and (p4.lower() in allSymptoms):
+            fulfillmentMessages7= "You have extremely greater chances of having the virus. Please contact the authorities " \
+                                "for further screening and please exercise self isolation. *Hotline numbers* " + hotline_no
+            log.saveConversations(sessionID, query_text,fulfillmentMessages7, intent, db )
             return {
                 "fulfillmentMessages": [
                     {
                         "text": {
                             "text": [
-                                "You have extremely greater chances of having the virus. Please contact the authorities " \
-                                "for further screening and please exercise self isolation. *Hotline numbers* " + hotline_no
+                               fulfillmentMessages7
                             ]
-
                         }
                     }
                 ]
             }
         else:
+            fulfillmentMessages8="i cannot exactly give you advice based on your answers please visit your nearest hospital for further" \
+                                "screening It is advisable to contact a health specialist for further diagonistics "\
+                                "but you are not showing severe signs of the virus. *Hotline numbers*" + hotline_no
+            log.saveConversations(sessionID, query_text,fulfillmentMessages8, intent, db )
             return {
                 "fulfillmentMessages": [
                     {
                         "text": {
                             "text": [
-                                "i cannot exactly give you advice based on your answers please visit your nearest hospital for further" \
-                                "screening It is advisable to contact a health specialist for further diagonistics "
-                                "but you are not showing severe signs of the virus. *Hotline numbers*" + hotline_no
+                                fulfillmentMessages8
 
                             ]
 
@@ -214,13 +224,6 @@ def processRequest(req):
                     }
                 ]
             }
-
-
-
-
-
-
-
     elif intent == "send_report_to_email":
         fulfillmentText = result.get("fulfillmentText")
         log.saveConversations(sessionID, "Sure send email", fulfillmentText, intent, db)
