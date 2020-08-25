@@ -45,5 +45,5 @@ How to Setup the whole system ?
 5. use PostMan to test this code locally. localhost:5000/webhook , give header and body as Raw json. (Everything mentioned inside document.)
 
 
-feel free to contact me in case of any problem reachout to me @ 'dineshraturi22@gmail.com' and Add subject-BestCovid Github Query
+feel free to contact me in case of any problem reachout to me @ 'gandanhamotrevor@gmail.com' and Add subject-BestCovid Github Query
 
